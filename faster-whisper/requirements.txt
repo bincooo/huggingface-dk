@@ -1,0 +1,5 @@
+faster-whisper
+gradio
+fastapi
+uvicorn
+python-socketio
