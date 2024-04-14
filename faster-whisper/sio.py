@@ -27,14 +27,14 @@ class PrefixNamespace(socketio.AsyncNamespace):
             print("An exception occurred: ", e)
             await self.sio.emit("error", "An exception occurred.")
 
-    async def on_raw_message(self, sid, data):
+    async def on_raw_message(self, sid, data, uin):
         print("raw_message", sid)
         if not isinstance(data, bytes):
             print("An exception occurred: not bytes")
             await self.sio.emit("error", "An exception occurred: not bytes.")
             return
 
-        res = transcribe(io.BytesIO(data), self.model, self.vad)
+        res = transcribe(io.BytesIO(data), self.model, self.vad, uin)
         await self.sio.emit("response", res)
 
     def on_disconnect(self, sid):
@@ -56,7 +56,7 @@ def server(app):
     app.add_websocket_route("/socket.io/", sio_asgi_app)
     return sio
 
-def transcribe(audio: BinaryIO, model: str, vad: bool):
+def transcribe(audio: BinaryIO, model: str, vad: bool, uin: str):
     # Load the model if different size is selected
     current_model = mod.load_model(model)
 
@@ -71,6 +71,7 @@ def transcribe(audio: BinaryIO, model: str, vad: bool):
     transcript = [{"start": segment.start, "end": segment.end, "text": segment.text} for segment in segments]
     print(f"Time Taken to transcribe: {time() - start}")
     output = {
+        "uin": uin,
         "language": info.language,
         "language_probability": info.language_probability,
         "transcript": transcript
