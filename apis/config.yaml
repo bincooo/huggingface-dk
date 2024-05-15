@@ -8,7 +8,7 @@ mappers:
         rewrite: /$1
   - addr: http://127.0.0.1:7379
     routes:
-      - path: ^/webdis/*
+      - path: ^/redis/*
         rewrite: /$1
   - addr: http://127.0.0.1:3000
     routes:
