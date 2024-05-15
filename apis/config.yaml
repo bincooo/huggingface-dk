@@ -14,10 +14,6 @@ mappers:
     routes:
       - path: ^/laf/*
         rewrite: /$1
-  - addr: https://freegpt35-brown.vercel.app
-    routes:
-      - path: ^/oai/wapi/*
-        rewrite: /$1
   - addr: http://127.0.0.1:3002
     routes:
       - path: ^/firecrawl/*
