@@ -1,0 +1,11 @@
+version: '3'
+services:
+  apis:
+    build: .
+    image: bincooo/apis:latest
+    restart: always
+    container_name: apis
+    ports:
+     - 7860:7860
+    volumes:
+     - ./config.yaml:/app/config.yaml
