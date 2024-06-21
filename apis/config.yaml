@@ -8,13 +8,21 @@ mappers:
         rewrite: /$1
   - addr: http://127.0.0.1:7379
     routes:
-      - path: ^/redis/*
+      - path: ^/webdis/*
         rewrite: /$1
   - addr: http://127.0.0.1:3000
     routes:
       - path: ^/laf/*
         rewrite: /$1
+  - addr: https://freegpt35-brown.vercel.app
+    routes:
+      - path: ^/oai/wapi/*
+        rewrite: /$1
   - addr: http://127.0.0.1:3002
     routes:
       - path: ^/firecrawl/*
+        rewrite: /$1
+  - addr: http://127.0.0.1:5010
+    routes:
+      - path: ^/ppl/*
         rewrite: /$1
