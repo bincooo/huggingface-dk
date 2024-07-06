@@ -33,7 +33,7 @@ RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add
 #    && apt-get update -qqy \
 #    && apt-get -qqy --no-install-recommends install microsoft-edge-stable
 
-ADD server .
+# ADD server .
 ADD config.yaml .
 RUN unzip ./you-helper.zip \
   && mkdir log \
