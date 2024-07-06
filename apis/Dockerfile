@@ -42,10 +42,6 @@ COPY worker.sh /app/worker.sh
 RUN git clone https://github.com/mendableai/firecrawl.git
 ADD firecrawl.env /app/firecrawl/apps/api/.env
 
-RUN git clone https://github.com/bincooo/ppl.git
-RUN cd ppl && pip3 install -r requirements.txt
-RUN sed -i 's/:pwd@1/1/g' /app/ppl/setting.py
-
 RUN mkdir -p /var/run/supervisor /var/log/supervisor
 RUN chown "${GBP_USER_ID}:${GBP_USER_ID}" /var/run/supervisor /var/log/supervisor
 
@@ -59,7 +55,6 @@ RUN touch /var/log/webdis.log \
   &&  chown "${GBP_USER_ID}:${GBP_USER_ID}" /run/redis \
   &&  chown "${GBP_USER_ID}:${GBP_USER_ID}" /.cache \
   &&  chown "${GBP_USER_ID}:${GBP_USER_ID}" /app/firecrawl/apps/api \
-  &&  chown "${GBP_USER_ID}:${GBP_USER_ID}" /app/ppl \
   &&  chown "${GBP_USER_ID}:${GBP_USER_ID}" /app
 RUN python3 -V
 USER $GBP_USER

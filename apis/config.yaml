@@ -22,7 +22,3 @@ mappers:
     routes:
       - path: ^/firecrawl/*
         rewrite: /$1
-  - addr: http://127.0.0.1:5010
-    routes:
-      - path: ^/ppl/*
-        rewrite: /$1
