@@ -1,11 +1,10 @@
 ---
-title: Coze Helper
-emoji: 💻
-colorFrom: red
-colorTo: red
+title: Helper
+emoji: 😻
+colorFrom: gray
+colorTo: yellow
 sdk: docker
 pinned: false
-license: mit
 app_port: 3000
 ---
 
