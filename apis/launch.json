@@ -1,0 +1,44 @@
+{
+  "apps": [
+    {
+      "name": "redis-server",
+      "script": "redis-server",
+      "args": [
+        "/etc/redis.conf"
+      ],
+      "out_file": "/app/launch.log",
+      "merge_logs": true,
+      "instances": 1
+    },
+    {
+      "name": "webdis",
+      "script": "/usr/local/bin/webdis",
+      "args": [
+        "/etc/webdis.prod.json"
+      ],
+      "out_file": "/app/launch.log",
+      "merge_logs": true,
+      "instances": 1
+    },
+    {
+      "name": "server",
+      "script": "/app/server",
+      "args": [
+      ],
+      "cwd": "/app",
+      "out_file": "/app/launch.log",
+      "merge_logs": true,
+      "instances": 1
+    },
+    {
+      "name": "worker",
+      "script": "/app/worker.sh",
+      "args": [
+      ],
+      "interpreter": "/bin/sh",
+      "out_file": "/app/launch.log",
+      "merge_logs": true,
+      "instances": 1
+    }
+  ]
+}

@@ -4,6 +4,7 @@ BASE=/app
 NAME=coze
 
 cd $BASE
+echo "waitting fetch $fetch"
 curl -s "$fetch" -o helper.zip && unzip helper.zip
 
 cd $BASE/${NAME}-helper
