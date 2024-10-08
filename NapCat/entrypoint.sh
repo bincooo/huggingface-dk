@@ -41,8 +41,8 @@ if [ ! -f "$CONFIG_PATH" ]; then
     : ${LOG_ENABLE:='false'}
     : ${RSM_ENABLE:='false'}
     : ${MESSAGE_POST_FORMAT:='array'}
-    : ${HTTP_HOST:=''}
-    : ${WS_HOST:=''}
+    : ${HTTP_HOST:='127.0.0.1'}
+    : ${WS_HOST:='127.0.0.1'}
     : ${HTTP_HEART_ENABLE:='false'}
     : ${MUSIC_SIGN_URL:=''}
     : ${HTTP_SECRET:=''}
@@ -54,12 +54,12 @@ cat <<EOF > $CONFIG_PATH
 {
     "http": {
       "enable": ${HTTP_ENABLE},
-      "host": "$HTTP_HOST",
+      "host": "${HTTP_HOST}",
       "port": ${HTTP_PORT},
-      "secret": "$HTTP_SECRET",
+      "secret": "${HTTP_SECRET}",
       "enableHeart": ${HTTP_HEART_ENABLE},
       "enablePost": ${HTTP_POST_ENABLE},
-      "postUrls": $HTTP_URLS
+      "postUrls": ${HTTP_URLS}
     },
     "ws": {
       "enable": ${WS_ENABLE},
@@ -76,11 +76,11 @@ cat <<EOF > $CONFIG_PATH
     },
     "debug": ${DEBUG_ENABLE},
     "heartInterval": ${HEART_INTERVAL},
-    "messagePostFormat": "$MESSAGE_POST_FORMAT",
+    "messagePostFormat": "${MESSAGE_POST_FORMAT}",
     "enableLocalFile2Url": ${F2U_ENABLE},
-    "musicSignUrl": "$MUSIC_SIGN_URL",
+    "musicSignUrl": "${MUSIC_SIGN_URL}",
     "reportSelfMessage": ${RSM_ENABLE},
-    "token": "$TOKEN"
+    "token": "${TOKEN}"
 }
 EOF
 fi
@@ -95,5 +95,9 @@ rm -rf "/tmp/.X1-lock"
 sleep 2
 export FFMPEG_PATH=/usr/bin/ffmpeg
 export DISPLAY=:1
+
+cd /app
+nohup ./server > nohup.out 2>&1 &
+
 cd /app/napcat
-xvfb-run /opt/QQ/qq --no-sandbox -q $ACCOUNT
+x-run /opt/QQ/qq --no-sandbox

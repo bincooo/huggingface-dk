@@ -18,12 +18,22 @@ RUN apt update \
   libsecret-1-0 \
   dbus \
   libasound2 \
-  libnss3
+  libnss3 \
+  tzdata && \
+  echo "${TZ}" > /etc/timezone && \ 
+  ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime && \
+  apt autoremove -y && \
+  apt clean && \
+  rm -rf \
+  /var/lib/apt/lists/* \
+  /tmp/* \
+  /var/tmp/*
 
 WORKDIR /app
 
 COPY entrypoint.sh /app/
-COPY qqnt.json /app/
+COPY qqnt.json server config.yaml /app/
+
 ENV version="v2.6.23"
 
 RUN curl -LJO https://github.com/NapNeko/NapCatQQ/releases/download/${version}/NapCat.Shell.zip
@@ -40,13 +50,17 @@ RUN arch=$(arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64/) && \
 
 RUN  mkdir -p napcat/config \
   && mkdir -p .config/QQ \
-  && mkdir -p /run/dbus
+  && mkdir -p /run/dbus \
+  && mkdir -p /home/node/.config/QQ/crash_files \
+  && touch /home/node/.config/QQ/crash_files/rqd_record.eup
 
 RUN unzip -q NapCat.Shell.zip -d ./NapCat.Shell \
     && mv NapCat.Shell/config/* napcat/config/ && rmdir NapCat.Shell/config \
     && mv NapCat.Shell/* napcat/
 # 授权
 RUN  chmod -R 777 /app/ \
-  && chmod -R 777 /run/
-# RUN dbus-daemon --system && ls /run/dbus -al
+  && chmod -R 777 /run/ \
+  && chmod -R 777 /home/node/.config/
+
+RUN mv /usr/bin/xvfb-run /usr/bin/x-run
 ENTRYPOINT ["bash", "entrypoint.sh"]
