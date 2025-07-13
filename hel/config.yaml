@@ -1,0 +1,5 @@
+browser-less:
+  #execPath: "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge"
+  disabled-gpu: true
+#  extension: plugins
+  headless: new
